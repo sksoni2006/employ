@@ -1,0 +1,203 @@
+.edit-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+}
+
+.card-flip {
+  perspective: 1500px;
+  width: 100%;
+  max-width: 400px;
+  height: 600px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+/* Replace the hover effect with a class-based flip */
+.card-flip.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.card-front {
+  background: white;
+}
+
+.card-back {
+  background: white;
+  transform: rotateY(180deg);
+  padding: 2rem;
+}
+
+.user-avatar-container {
+  position: relative;
+  height: 100%;
+}
+
+.user-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  color: white;
+}
+
+.edit-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.update-button,
+.cancel-button {
+  flex: 1;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.update-button {
+  background: #3b82f6;
+  color: white;
+}
+
+.update-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+.cancel-button {
+  background: #ef4444;
+  color: white;
+}
+
+.cancel-button:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+.success-message {
+  background-color: #def7ec;
+  color: #03543f;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.error-message {
+  background-color: #fde8e8;
+  color: #9b1c1c;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Add a manual flip trigger button */
+.flip-trigger {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.flip-trigger:hover {
+  transform: scale(1.1);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Remove the continuous hover flip effect */
+/* Delete or comment out this section
+.card-flip:hover .card-inner {
+  transform: rotateY(360deg);
+}
+*/
+
+/* Add media queries for responsiveness */
+@media (max-width: 640px) {
+  .card-flip {
+    height: 500px;
+  }
+
+  .card-back {
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    padding: 1rem;
+  }
+}
