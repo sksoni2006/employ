@@ -1,27 +1,65 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../../utils/auth';
 import './Login.css';
 
 function Login() {
-  const [email, setEmail] = useState('eve.holt@reqres.in');
-  const [password, setPassword] = useState('cityslicka');
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.logout();
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    if (error) setError('');
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
+
+    if (!formData.email || !formData.password) {
+      setError('Please enter both email and password');
+      setIsLoading(false);
+      return;
+    }
 
     try {
       const response = await axios.post('https://reqres.in/api/login', {
-        email,
-        password
+        email: formData.email,
+        password: formData.password
       });
-      localStorage.setItem('token', response.data.token);
-      navigate('/users');
+
+      if (response.data && response.data.token) {
+        auth.login(response.data.token);
+        
+        axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        
+        navigate('/users');
+      } else {
+        throw new Error('No token received');
+      }
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
+      console.error('Login error:', err);
+      setError(
+        err.response?.data?.error || 
+        'Login failed. Please use eve.holt@reqres.in with password cityslicka'
+      );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,27 +97,41 @@ function Login() {
 
           <form onSubmit={handleLogin}>
             <div className="input-group">
-              <label>Email Address</label>
+              <label htmlFor="email">Email Address</label>
               <input
+                id="email"
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
                 required
+                autoComplete="email"
+                disabled={isLoading}
               />
             </div>
 
             <div className="input-group">
-              <label>Password</label>
+              <label htmlFor="password">Password</label>
               <input
+                id="password"
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
                 required
+                autoComplete="current-password"
+                disabled={isLoading}
               />
             </div>
 
-            <button type="submit" className="submit-button">
-              Sign In
+            <button 
+              type="submit" 
+              className="submit-button"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
         </div>

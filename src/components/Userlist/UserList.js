@@ -14,12 +14,10 @@ function UserList() {
   const [message, setMessage] = useState({ text: '', type: '' });
   const navigate = useNavigate();
 
-  // Fetch all users when component mounts
   useEffect(() => {
     fetchAllUsers();
   }, []);
 
-  // Fetch all users from all pages
   const fetchAllUsers = async () => {
     setLoading(true);
     try {
@@ -27,7 +25,6 @@ function UserList() {
       const firstResponse = await axios.get('https://reqres.in/api/users?page=1');
       const totalPages = firstResponse.data.total_pages;
 
-      // Fetch all pages
       for (let page = 1; page <= totalPages; page++) {
         const response = await axios.get(`https://reqres.in/api/users?page=${page}`);
         allUserData = [...allUserData, ...response.data.data];
@@ -36,7 +33,6 @@ function UserList() {
       setAllUsers(allUserData);
       setTotalUsers(allUserData.length);
 
-      // Initialize with all users on first page
       const itemsPerPage = 6;
       setTotalPages(Math.ceil(allUserData.length / itemsPerPage));
       setUsers(allUserData.slice(0, itemsPerPage));
@@ -47,7 +43,6 @@ function UserList() {
     }
   };
 
-  // Handle search and pagination
   const handleSearch = (searchValue = searchTerm) => {
     const filteredUsers = allUsers.filter(user =>
       `${user.first_name} ${user.last_name}`
@@ -58,7 +53,6 @@ function UserList() {
     setTotalUsers(filteredUsers.length);
     setTotalPages(Math.ceil(filteredUsers.length / 6));
 
-    // Get current page's users
     const indexOfLastUser = currentPage * 6;
     const indexOfFirstUser = indexOfLastUser - 6;
     setUsers(filteredUsers.slice(indexOfFirstUser, indexOfLastUser));
@@ -71,12 +65,11 @@ function UserList() {
     }
   };
 
-  // Update search term handler
   const handleSearchChange = (e) => {
     const newSearchTerm = e.target.value;
     setSearchTerm(newSearchTerm);
-    setCurrentPage(1); // Reset to first page when searching
-    handleSearch(newSearchTerm); // Pass the new search term directly
+    setCurrentPage(1); 
+    handleSearch(newSearchTerm); 
   };
 
   const handleLogout = () => {
@@ -90,24 +83,19 @@ function UserList() {
     try {
       await axios.delete(`https://reqres.in/api/users/${id}`);
       
-      // Update allUsers state
       const updatedAllUsers = allUsers.filter(user => user.id !== id);
       setAllUsers(updatedAllUsers);
       
-      // Store in localStorage
       localStorage.setItem('users', JSON.stringify(updatedAllUsers));
       
-      // Recalculate pagination
       setTotalUsers(updatedAllUsers.length);
       const newTotalPages = Math.ceil(updatedAllUsers.length / 6);
       setTotalPages(newTotalPages);
       
-      // Adjust current page if necessary
       if (currentPage > newTotalPages) {
         setCurrentPage(newTotalPages);
       }
       
-      // Update displayed users
       handleSearch(searchTerm);
       
       setMessage({
@@ -130,27 +118,23 @@ function UserList() {
       if (event.state?.updatedUser) {
         const updatedUser = event.state.updatedUser;
         
-        // Update allUsers state
         setAllUsers(prevUsers =>
           prevUsers.map(user =>
             user.id === updatedUser.id ? updatedUser : user
           )
         );
 
-        // Update displayed users if necessary
         setUsers(prevUsers =>
           prevUsers.map(user =>
             user.id === updatedUser.id ? updatedUser : user
           )
         );
 
-        // Show success message
         setMessage({
           text: 'User updated successfully!',
           type: 'success'
         });
 
-        // Clear message after 3 seconds
         setTimeout(() => setMessage({ text: '', type: '' }), 3000);
       }
     };
@@ -159,14 +143,12 @@ function UserList() {
     return () => window.removeEventListener('popstate', handleUserUpdate);
   }, []);
 
-  // Generate an array of page numbers to display
   const generatePaginationNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
 
-    // Adjust start page if we're near the end
     if (endPage - startPage + 1 < maxPagesToShow) {
       startPage = Math.max(1, endPage - maxPagesToShow + 1);
     }
@@ -209,10 +191,10 @@ function UserList() {
             {users.map(user => (
               <div key={user.id} className="user-card">
                 <img 
-                  src={user.avatar.replace('/140', '/512')} // Request larger image
+                  src={user.avatar.replace('/140', '/512')} 
                   alt={`${user.first_name} ${user.last_name}`}
-                  loading="lazy" // Add lazy loading
-                  decoding="async" // Optimize image decoding
+                  loading="lazy" 
+                  decoding="async" 
                 />
                 <div className="user-info">
                   <h3>{`${user.first_name} ${user.last_name}`}</h3>

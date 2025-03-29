@@ -53,7 +53,6 @@ function EditUser() {
 
       if (response.status === 200) {
         const updatedUser = { ...user, id: parseInt(id) };
-        // Update local storage
         const allUsers = JSON.parse(localStorage.getItem('users') || '[]');
         const updatedUsers = allUsers.map(u => 
           u.id === updatedUser.id ? updatedUser : u

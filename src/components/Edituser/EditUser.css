@@ -23,7 +23,6 @@
   transform-style: preserve-3d;
 }
 
-/* Replace the hover effect with a class-based flip */
 .card-flip.flipped .card-inner {
   transform: rotateY(180deg);
 }
@@ -155,7 +154,6 @@
   text-align: center;
 }
 
-/* Add a manual flip trigger button */
 .flip-trigger {
   position: absolute;
   top: 1rem;
@@ -179,14 +177,7 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Remove the continuous hover flip effect */
-/* Delete or comment out this section
-.card-flip:hover .card-inner {
-  transform: rotateY(360deg);
-}
-*/
 
-/* Add media queries for responsiveness */
 @media (max-width: 640px) {
   .card-flip {
     height: 500px;
