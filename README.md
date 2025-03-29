@@ -1,70 +1,163 @@
-# Getting Started with Create React App
+# User Management System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React-based user management system with authentication, CRUD operations, and responsive design.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- User authentication with JWT
+- User listing with pagination and search
+- Edit user details with card flip animation
+- Delete user functionality
+- Responsive design for all devices
+- Token-based authentication persistence
+- Loading states and error handling
 
-### `npm start`
+## Live Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+[Demo Link](https://employwise-user-management-six.vercel.app/)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Installation
 
-### `npm test`
+1. Clone the repository
+```bash
+git clone https://github.com/sksoni2006/employ.git
+cd user-management-system
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Install dependencies
+```bash
+npm install
+```
 
-### `npm run build`
+3. Start the development server
+```bash
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The application will start running at `http://localhost:3000`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Environment Variables
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a `.env` file in the root directory:
 
-### `npm run eject`
+```env
+REACT_APP_API_URL=https://reqres.in/api
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Login Credentials
+- Email: eve.holt@reqres.in
+- Password: cityslicka
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Available Routes
+- `/login` - Login page
+- `/users` - User listing page (Protected)
+- `/edit/:id` - Edit user page (Protected)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project Structure
 
-## Learn More
+```
+my-app/
+│── node_modules/
+│── public/
+│── src/
+│   ├── components/
+│   │   ├── Edituser/
+│   │   │   ├── EditUser.css
+│   │   │   ├── EditUser.js
+│   │   ├── Login/
+│   │   │   ├── Login.css
+│   │   │   ├── Login.js
+│   │   ├── Userlist/
+│   │   │   ├── UserList.css
+│   │   │   ├── UserList.js
+│   │   ├── PrivateRoute.js
+│   ├── utils/
+│   │   ├── auth.js
+│   │   ├── axios-config.js
+│   ├── App.js
+│   ├── index.js
+│── .env
+│── package.json
+│── README.md
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## API Integration
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This project uses the ReqRes API for demonstration:
+- Authentication: POST /api/login
+- User List: GET /api/users
+- Update User: PUT /api/users/{id}
+- Delete User: DELETE /api/users/{id}
 
-### Code Splitting
+## Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- React 18
+- React Router v6
+- Axios
+- CSS3 with animations
+- Local Storage for persistence
 
-### Analyzing the Bundle Size
+## Features in Detail
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Authentication**
+   - JWT token-based auth
+   - Protected routes
+   - Token persistence
+   - Auto logout on token expiry
 
-### Making a Progressive Web App
+2. **User Management**
+   - List users with pagination
+   - Search functionality
+   - Edit user details
+   - Delete users
+   - Responsive card layout
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+3. **UI/UX**
+   - Card flip animations
+   - Loading states
+   - Error handling
+   - Success messages
+   - Responsive design
+   - Dark mode support
 
-### Advanced Configuration
+## Browser Support
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-### Deployment
+## Known Limitations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. ReqRes API is a mock API:
+   - Updates aren't persistent on the server
+   - Limited to provided test data
+   - Token doesn't actually expire
 
-### `npm run build` fails to minify
+2. Search is client-side only
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details
+
+## Contact
+
+Your Name - Shubham Kumar Soni
+Mail id:shubhamkumar99399006@gmail.com
+Project Link: [https://github.com/sksoni2006/employ.git](https://github.com/sksoni2006/employ)
+
+## Acknowledgments
+
+- [ReqRes API](https://reqres.in/) for the test API
+- [React Documentation](https://reactjs.org/)
+- [React Router](https://reactrouter.com/)
